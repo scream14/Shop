@@ -1,28 +1,26 @@
 package shop;
 
 
-import shop.shopGUI.ShopWindow;
-import shop.shopService.DBWorker;
+import shop.database.DBConnection;
+import shop.database.DBSelector;
+import shop.gui.ShopFrame;
+import shop.service.ShopService;
 
-
-import java.io.IOException;
+import java.awt.*;
 
 
 public class ShopLauncher {
+    public static void main(String[] args) throws Exception {
 
-    static DBWorker worker = new DBWorker();
-
-
-    public static void main(String[] args) throws IOException {
-
-        -splash:bs/sbird.gif
+//        -splash:src\shop\splashscreen\sbird.gif
         SplashScreen splash = SplashScreen.getSplashScreen();
-        Thread.sleep(5000);
+        Thread.sleep(3000);
         splash.close();
 
-        ShopWindow sw = new ShopWindow(worker);
+        DBConnection connection = new DBConnection(DBSelector.MySQL);
+        ShopService service = new ShopService(connection.getDbWorker());
+        new ShopFrame(service);
+
     }
-    public static DBWorker getDBWorker(){
-        return worker;
-    }
+
 }
